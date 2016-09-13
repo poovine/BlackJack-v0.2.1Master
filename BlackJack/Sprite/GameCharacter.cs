@@ -79,7 +79,7 @@ namespace BlackJack {
             if (lowHandValue <= 21 && highHandValue <= 21)
                 finalHandValue = Math.Max(lowHandValue, highHandValue);
             if (lowHandValue > 21 && highHandValue > 21)
-                finalHandValue = 0;
+                finalHandValue = -1;
         }
     }
 }

@@ -20,11 +20,7 @@ namespace BlackJack {
         }
 
         public override void Update(GameTime gameTime) {
-            Console.WriteLine("DealerStanding? " + this.IsStanding);
-            Console.WriteLine("DealerBusted? " + this.HasBusted); 
-            Console.WriteLine("DealerHighTotal is: " + this.HighHandValue);
-            Console.WriteLine("DealerLowTotal is: " + this.LowHandValue);
-            Console.WriteLine("DealerBlackJack? " + this.HasBlackJack);
+  
 
             base.Update(gameTime);
         }

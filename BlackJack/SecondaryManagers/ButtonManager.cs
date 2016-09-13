@@ -11,7 +11,8 @@ namespace BlackJack {
     class ButtonManager {
         private Button hitButton, standButton, doubleButton, splitButton,
                        betButton, tenButton, hundredButton, fiveHundredButton,
-                       oneThousandButton, fiveThousandButton, tenThousandButton;        
+                       oneThousandButton, fiveThousandButton, tenThousandButton,
+                       betAmountChip;      
 
         public Button HitButton { get { return hitButton; } }
         public Button StandButton { get { return standButton; } }
@@ -24,10 +25,13 @@ namespace BlackJack {
         public Button OneThousandButton { get { return oneThousandButton; } }
         public Button FiveThousandButton { get { return fiveThousandButton; } }
         public Button TenThousandButton { get { return tenThousandButton; } }
+        public Button BetAmountChip { get { return betAmountChip; } set { betAmountChip = value; } }
 
         public List<Button> Buttons { get; set; }
+        public List<Button> ChipButtons { get; set; }
 
-        private Texture2D buttonSprites, chipSprites;
+        private Texture2D buttonSprites, chipSprites, chipSprites2;
+        private SpriteFont betFont;
 
         private ContentManager content;
 
@@ -37,7 +41,10 @@ namespace BlackJack {
         public void InitializeButtons() {
             buttonSprites = content.Load<Texture2D>("Textures\\bjbuttons");
             chipSprites = content.Load<Texture2D>("Textures\\chipsSheet3");
+            chipSprites2 = content.Load<Texture2D>("Textures\\chipsSheet2");
+            betFont = content.Load<SpriteFont>("Fonts\\font");
             Buttons = new List<Button>();
+            ChipButtons = new List<Button>();
             Buttons.Add(hitButton = new Button(0,Button.ButtonType.CardActionButton,"Hit", buttonSprites, new Vector2(475, 515), new Rectangle(0, 0, 90, 65)));
             Buttons.Add(standButton = new Button(0,Button.ButtonType.CardActionButton,"Stand", buttonSprites, new Vector2(720, 515), new Rectangle(90, 0, 90, 65)));
             Buttons.Add(doubleButton = new Button(0,Button.ButtonType.CardActionButton,"DoubleDown",buttonSprites, new Vector2(475, 570), new Rectangle(180, 0, 90, 65)));
@@ -49,12 +56,35 @@ namespace BlackJack {
             Buttons.Add(oneThousandButton = new Button(1000,Button.ButtonType.BettingButton, "OneThousand",chipSprites, new Vector2(1055, 640), new Rectangle(206, 0, 65, 65)));
             Buttons.Add(fiveThousandButton = new Button(5000,Button.ButtonType.BettingButton, "FiveThousand",chipSprites, new Vector2(1125, 640), new Rectangle(137, 0, 65, 65)));
             Buttons.Add(tenThousandButton = new Button(10000,Button.ButtonType.BettingButton, "TenThousand",chipSprites, new Vector2(1195, 640), new Rectangle(0, 0, 65, 65)));
+
+            ChipButtons.Add(new Button(0, Button.ButtonType.CardActionButton, "BetAmount", chipSprites2, new Vector2(596, 530), new Rectangle(343, 0, 65, 65), 1.5f));
+            ChipButtons.Add(new Button(0, Button.ButtonType.CardActionButton, "BetAmount", chipSprites2, new Vector2(596, 530), new Rectangle(69, 0, 65, 65), 1.5f));
+            ChipButtons.Add(new Button(0, Button.ButtonType.CardActionButton, "BetAmount", chipSprites2, new Vector2(596, 530), new Rectangle(275, 0, 65, 65), 1.5f));
+            ChipButtons.Add(new Button(0, Button.ButtonType.CardActionButton, "BetAmount", chipSprites2, new Vector2(596, 530), new Rectangle(206, 0, 65, 65), 1.5f));
+            ChipButtons.Add(new Button(0, Button.ButtonType.CardActionButton, "BetAmount", chipSprites2, new Vector2(596, 530), new Rectangle(137, 0, 65, 65), 1.5f));
+            ChipButtons.Add(new Button(0, Button.ButtonType.CardActionButton, "BetAmount", chipSprites2, new Vector2(596, 530), new Rectangle(0, 0, 65, 65), 1.5f));
         }
 
         public void DrawGameButtons(SpriteBatch spriteBatch) {
             foreach(Button button in Buttons) {
                 button.Draw(spriteBatch);
             }
+        }
+
+        public void DrawBetAmountButton(SpriteBatch spriteBatch) {
+            if (GameManager.Instance.PlayerManager.Player.FinalBetAmount < 100)
+                ChipButtons[0].Draw(spriteBatch);
+            else if (GameManager.Instance.PlayerManager.Player.FinalBetAmount >= 100 && GameManager.Instance.PlayerManager.Player.FinalBetAmount <500)
+                ChipButtons[1].Draw(spriteBatch);
+            else if (GameManager.Instance.PlayerManager.Player.FinalBetAmount >= 500 && GameManager.Instance.PlayerManager.Player.FinalBetAmount < 1000)
+                ChipButtons[2].Draw(spriteBatch);
+            else if (GameManager.Instance.PlayerManager.Player.FinalBetAmount >= 1000 && GameManager.Instance.PlayerManager.Player.FinalBetAmount < 5000)
+                ChipButtons[3].Draw(spriteBatch);
+            else if (GameManager.Instance.PlayerManager.Player.FinalBetAmount >= 5000 && GameManager.Instance.PlayerManager.Player.FinalBetAmount < 10000)
+                ChipButtons[4].Draw(spriteBatch);
+            else if (GameManager.Instance.PlayerManager.Player.FinalBetAmount >= 10000)
+                ChipButtons[5].Draw(spriteBatch);
+            spriteBatch.DrawString(betFont, GameManager.Instance.PlayerManager.Player.FinalBetAmount.ToString(), new Vector2(620, 555), Color.Black);
         }
 
         public void UpdateAllButtons(GameTime gameTime) {
@@ -73,6 +103,7 @@ namespace BlackJack {
 
         public void Draw(SpriteBatch spriteBatch) {
             DrawGameButtons(spriteBatch);
+            DrawBetAmountButton(spriteBatch);
         }
     }
 }

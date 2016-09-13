@@ -82,7 +82,7 @@ namespace BlackJack {
             PlayerManager.Update(gameTime);
             ButtonManager.Update(gameTime);
 
-            Console.WriteLine(gamePlayState);
+           
 
             /****/
 
@@ -141,8 +141,7 @@ namespace BlackJack {
                         gamePlayState = GamePlayState.GetWinner;
                     break;
                 case GamePlayState.GetWinner:
-                    int winValue = BlackJackHandler.CheckWinner(dealer, player);
-                    Console.WriteLine("WinValue is: " + winValue);
+                    int winValue = BlackJackHandler.CheckWinner(dealer, player);                    
                     if (winValue == 1 && !player.HasBeenPaid) {
                         player.ChipCount += player.FinalBetAmount * 2;
                         player.HasBeenPaid = true;
@@ -164,7 +163,7 @@ namespace BlackJack {
                         player.playerWinState = Player.PlayerWinState.Push;
                     }
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    if (Mouse.GetState().RightButton == ButtonState.Pressed)
                         gamePlayState = GamePlayState.InitializeState;
                     break;
             }
@@ -187,8 +186,31 @@ namespace BlackJack {
         }
 
         public void DrawFonts(SpriteBatch spriteBatch) {
-            spriteBatch.DrawString(font, "Chips: " + player.ChipCount.ToString(), new Vector2(800, 600), Color.Black);
-            spriteBatch.DrawString(font, "BetAmount: " + player.BetAmount.ToString(), new Vector2(800, 625), Color.Black);
+            spriteBatch.DrawString(font, "Player High Hand Value?: " + player.HighHandValue, new Vector2(800, 425), Color.Black);
+            spriteBatch.DrawString(font, "Player Low Hand Value?: " + player.LowHandValue, new Vector2(800, 450), Color.Black);
+            spriteBatch.DrawString(font, "Player Final Hand Value?: " + player.FinalHandValue, new Vector2(800, 475), Color.Black);
+            spriteBatch.DrawString(font, "Player Chips: " + player.ChipCount.ToString(), new Vector2(800, 500), Color.Black);
+            spriteBatch.DrawString(font, "Player win state: " + player.playerWinState, new Vector2(200,550), Color.Black);
+            spriteBatch.DrawString(font, "Player Final Bet Amount?: " + player.FinalBetAmount, new Vector2(200, 525), Color.Black);
+            spriteBatch.DrawString(font, "Player BetAmount: " + player.BetAmount.ToString(), new Vector2(800, 525), Color.Black);
+            spriteBatch.DrawString(font, "Player has BJ?: "  + player.HasBlackJack, new Vector2(800, 550), Color.Black);
+            spriteBatch.DrawString(font, "Player has bet?: " + player.PlacedBet, new Vector2(800, 575), Color.Black);
+            spriteBatch.DrawString(font, "Player has busted?: " + player.HasBusted, new Vector2(800, 600), Color.Black);
+            spriteBatch.DrawString(font, "Player has been paid?: " + player.HasBeenPaid, new Vector2(800, 625), Color.Black);
+            spriteBatch.DrawString(font, "Player is Standing?: " + player.IsStanding, new Vector2(800, 650), Color.Black);
+            spriteBatch.DrawString(font, "Player won last?: " + player.WonLastHand, new Vector2(800, 675), Color.Black);
+
+            spriteBatch.DrawString(font, "Dealer High Hand Value?: " + dealer.HighHandValue, new Vector2(800, 0), Color.Black);
+            spriteBatch.DrawString(font, "Dealer Low Hand Value?: " + dealer.LowHandValue, new Vector2(800, 25), Color.Black);
+            spriteBatch.DrawString(font, "Dealer Final Hand Value?: " + dealer.FinalHandValue, new Vector2(800, 50), Color.Black);
+            spriteBatch.DrawString(font, "Dealer Has BJ?: " + dealer.HasBlackJack, new Vector2(800, 75), Color.Black);
+            spriteBatch.DrawString(font, "Dealer Has Busted?: " + dealer.HasBusted, new Vector2(800, 100), Color.Black);
+            spriteBatch.DrawString(font, "Dealer Is Standing?: " + dealer.IsStanding, new Vector2(800, 125), Color.Black);
+            
+            
+
+
+
         }
 
         /*

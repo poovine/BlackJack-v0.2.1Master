@@ -38,11 +38,11 @@ namespace BlackJack {
             if (dealer.HighHandValue < 17) {
                 hit.Execute(dealer);
             }
-            else if (dealer.HighHandValue > 17) {
-                stand.Execute(dealer);
-            }
             else if (dealer.HighHandValue == 17 && dealer.LowHandValue < 17) {
                 hit.Execute(dealer);
+            }
+            else if (dealer.HighHandValue == 17 && dealer.LowHandValue == 17) {
+               stand.Execute(dealer);
             }
             else
                 stand.Execute(dealer);

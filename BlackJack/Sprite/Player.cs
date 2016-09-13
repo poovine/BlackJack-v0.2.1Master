@@ -16,7 +16,7 @@ namespace BlackJack {
         public bool PlacedBet { get; set; }
         public bool HasBusted { get; set; }
         public bool HasBlackJack { get; set; }
-        public bool WonLastHand { get; set; }
+        public bool WonLastHand { get; set; } //not doing anything atm
         public bool HasBeenPaid { get; set; }
         public PlayerWinState playerWinState;               
 
@@ -48,18 +48,7 @@ namespace BlackJack {
             return (!BlackJackHandler.IsBust(this) && !GameManager.Instance.PlayerManager.Player.IsStanding);
         }      
 
-        public override void Update(GameTime gameTime) {
-            Console.WriteLine("---------------------------------------");
-            Console.WriteLine("ChipCount is: " + this.ChipCount);
-            Console.WriteLine("Sub bet is: " + this.BetAmount);
-            Console.WriteLine("FinalBet is: " + this.FinalBetAmount);
-            Console.WriteLine("TotalHigh is: " + this.HighHandValue);
-            Console.WriteLine("TotalLow is: " + this.LowHandValue);
-            Console.WriteLine("FinalTotal is: " + this.FinalHandValue);
-            Console.WriteLine("BlackJack? " + this.HasBlackJack);
-            Console.WriteLine("Standing? " + this.IsStanding);
-            Console.WriteLine("Busted? " + this.HasBusted);
-            Console.WriteLine("HasBet? " + this.PlacedBet);
+        public override void Update(GameTime gameTime) {  
                    
             base.Update(gameTime);
         }
